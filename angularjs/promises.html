@@ -24,11 +24,16 @@
     <script>
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope, $http, $timeout) {
+            
+            //Set isLoading flag
+            $scope.isLoading = true;
+            
             var auth_token = '';
             /** 
                 Traditional synchronous approach 
             */
-            //Request using AJAX
+
+            // //Request using AJAX
             // var request = new XMLHttpRequest();
             // request.open('GET', 'https://jsonblob.com/api/6ecf4eac-9b57-11e8-b03b-5de0db91b3a3', false);  // `false` makes the request synchronous
             // request.send(null);
@@ -36,7 +41,7 @@
             // if (request.status === 200) {
             //     var response = JSON.parse(request.responseText);
             //     auth_token = response.access_token;
-            //     alert(auth_token);
+            //     console.log('My token is: ' + auth_token);
             // }
 
             // //Add authorization to request
@@ -44,15 +49,16 @@
             // request.send(auth_token);
 
             // if (request.status === 200) {
-            //     alert(request.responseText);
+            //     var response = JSON.parse(request.responseText);
+            //     $scope.accounts = response.accounts;
             // }
+
+            // $scope.isLoading = false;
+
 
             /**
                 Promises approach
             **/
-
-            $scope.isLoading = true;
-            
             //Step 1. Get authorization token
             $http.get("https://jsonblob.com/api/6ecf4eac-9b57-11e8-b03b-5de0db91b3a3")
             .then(function (response) {
@@ -69,7 +75,7 @@
                 //Simulate network latency
                 return $timeout(function(){
                     return response;
-                },3000);
+                },0);
             })
             .catch(function(reason){
                 $scope.error = "Unable to retrieve accounts";
