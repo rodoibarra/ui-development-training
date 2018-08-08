@@ -16,9 +16,16 @@
     <script>
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope, $http) {
-            $http.get("https://jsonblob.com/api/6ecf4eac-9b57-11e8-b03b-5de0db91b3a3").then(function (response) {
-                $scope.myWelcome = response.data.message;
+            //var rawResponse = '';
+            $http.get("https://jsonblob.com/api/6ecf4eac-9b57-11e8-b03b-5de0db91b3a3")
+            .then(function (response) {
+                $scope.myWelcome = response.data;
+            })
+            .then(function (response) {
+                
             });
+
+            //$scope.myWelcome = response.data.message;
         });
     </script>
 
