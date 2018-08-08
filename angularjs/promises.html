@@ -64,12 +64,19 @@
             .then(function (response) {
                 auth_token = response.data.access_token;
                 console.log('My token is: ' + auth_token);
-                
+                return auth_token                
+            })
+            .then(function (auth_token) {
+                //To simulate an error coming back from request
+                if (auth_token == undefined) {
+                    throw 'No authorization token';
+                } 
+
                 return $http.get("https://jsonblob.com/api/6b845823-9b59-11e8-b03b-238d81ee02f2")
                 .then(function(response) {
                     $scope.accounts = response.data.accounts;
                     return response;
-                });
+                })
             })
             .then(function(response){
                 //Simulate network latency
@@ -78,7 +85,7 @@
                 },0);
             })
             .catch(function(reason){
-                $scope.error = "Unable to retrieve accounts";
+                $scope.error = _.get(reason,'status') || reason;
                 console.log('An error occurred in one of the requests', reason);
             })
             .finally(function(){
