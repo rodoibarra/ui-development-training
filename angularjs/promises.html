@@ -64,7 +64,7 @@
             .then(function (response) {
                 auth_token = response.data.access_token;
                 console.log('My token is: ' + auth_token);
-                return auth_token                
+                return auth_token;                
             })
             .then(function (auth_token) {
                 //To simulate an error coming back from request
