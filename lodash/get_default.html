@@ -1,0 +1,63 @@
+<html>
+<head>
+    <script src="../resources/lodash.js"></script>
+    <script type="text/javascript">
+        var person1 = 
+        { 
+            name: 'Alejandro', 
+            lastName: "Villarreal", 
+            age: '29', 
+            education: { 
+                school: {
+                        name: 'University of Texas',
+                        location: 'Houston,Texas'
+                    }, 
+                degree: 'MBA' 
+            }, 
+            spouse: { 
+                name: 'Alicia', 
+                lastName: 'Villarreal', 
+                age: '21',
+                education: {
+                    degree: 'PHD',
+                    school: {
+                        location: "Dallas, Texas",
+                        name: 'University of Dallas'
+                    }
+                }
+            } 
+        };
+
+        var person2 = 
+        {
+            name: 'Rodolfo', 
+            lastName: "Ibarra"
+        };
+
+
+        printEducationInfo(person2);
+        printEducationInfo(person2.spouse);
+
+        // function printNames(person) {
+        //     console.log('My name is ' + _.get(person, 'name') + ' ' + _.get(person, 'lastName'));
+        //     console.log('My wife name is ' + _.get(person, 'spouse.name') + ' ' + _.get(person, 'spouse.lastName'));
+        // }
+
+        // function printAges(person) {
+        //     console.log(_.get(person,'name') + ' is ' + _.get(person,'age') + ' years old.');
+        //     console.log(_.get(person,'spouse.name') + ' is ' + _.get(person,'spouse.age') + ' years old.');
+        // }
+
+        function printEducationInfo(person) {
+            //if (person.education.degree !== undefined && person.education.school !== undefined && person.education.school.name !== undefined) {
+                 console.log(_.get(person,'name') + ' studied ' + _.get(person,'education.degree', 'NA') + ' at ' + _.get(person,'education.school.name', 'NA'));
+            //}
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+
+</html>
