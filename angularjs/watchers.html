@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <script src="../resources/lodash.js"></script>
+    <script src="../resources/angular.js"></script>
+</head>
+
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        
+        <select ng-model="selectedCar">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </select>
+        <br>
+
+        <h1>{{carInfo.name}}</h1>
+        <p>{{'Color: ' +  carInfo.color}}</p>
+        <img ng-src="{{carInfo.image}}">   
+        
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('myCtrl', function ($scope, $http) {
+            //Preselect option on init
+            $scope.selectedCar = 'volvo';
+            
+            //Set map of api urls
+            var carsApiLinks = 
+            {
+                volvo : "https://jsonblob.com/api/3925185f-9c02-11e8-bf9e-adacb72ddbff",
+                saab : "https://jsonblob.com/api/6296af37-9c02-11e8-bf9e-5bcb332b273f",
+                mercedes : "https://jsonblob.com/api/256d7cca-9c02-11e8-bf9e-c15c009a781d",
+                audi : "https://jsonblob.com/api/77ef028f-9c02-11e8-bf9e-f98dcfd24c27"
+            }
+
+
+            $scope.$watch('selectedCar', function(selectedOption){
+                console.log('The selected car is ' + selectedOption);
+                var carApiLink = carsApiLinks[selectedOption];
+
+                $http.get(carApiLink)
+                .then(function(response) {
+                    var car = response.data;
+
+                    //Capitalize car color
+                    car.color = _.capitalize(car.color);
+
+                    $scope.carInfo = car;
+                });
+            });
+            
+            
+        });
+
+       
+
+    </script>
+
+</body>
+
+</html>
