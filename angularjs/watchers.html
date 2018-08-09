@@ -16,9 +16,14 @@
         </select>
         <br>
 
-        <h1>{{carInfo.name}}</h1>
-        <p>{{'Color: ' +  carInfo.color}}</p>
-        <img ng-src="{{carInfo.image}}">   
+        <img ng-show="isReady === false" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif">
+
+        <div ng-show="isReady == true">
+            <h1>{{carInfo.name}}</h1>
+            <p>{{'Color: ' +  carInfo.color}}</p>
+            <img ng-src="{{carInfo.image}}">   
+        </div>
+
         
     </div>
     <script>
@@ -40,7 +45,11 @@
 
             $scope.$watch('selectedCar', function(selectedOption){
                 console.log('The selected car is ' + selectedOption);
+
+                //Get car api url
                 var carApiLink = carsApiLinks[selectedOption];
+
+                $scope.isReady = false;
 
                 $http.get(carApiLink)
                 .then(function(response) {
@@ -50,7 +59,11 @@
                     car.color = _.capitalize(car.color);
 
                     $scope.carInfo = car;
+                })
+                .finally(function(){
+                    $scope.isReady = true;
                 });
+
             });
             
             
